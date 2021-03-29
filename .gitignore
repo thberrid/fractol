@@ -1,6 +1,6 @@
 .vscode
 *.swp
 a.out
-*/*.o
-*/*.a
+*.o
+*.a
 fractol

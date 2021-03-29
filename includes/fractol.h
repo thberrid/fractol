@@ -13,7 +13,31 @@
 #ifndef FRACTOL_H
 # define FRACTOL_H
 
+# include <keycodes.h>
 # include <libft.h>
-# define TEST "ok boomer"
+# include <mlx.h>
+
+# define W_WIDTH	750
+# define W_HEIGHT	750
+# define W_NAME		"fractol"
+
+typedef struct	s_img
+{
+	void	*id;
+	char	*canvas;
+	int		line_size;
+	int		pixel_size;
+	int		endian;
+}				t_img;
+
+typedef struct	s_window
+{
+	void			*id;
+	void			*mlx;
+	void			*img;
+	char			name[32];
+	unsigned int	width;
+	unsigned int	height;
+}				t_window;
 
 #endif

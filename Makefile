@@ -23,14 +23,15 @@ NAME	= fractol
 INCDIR	= includes
 
 SRCS	= main.c
-NAME_H	= fractol.h
+NAME_H	= fractol.h \
+			keycodes.h
 NAME_O	= $(SRCS:.c=.o)
 FILES_O	= $(addprefix $(OBJDIR)/, $(NAME_O))
 FILES_H	= $(addprefix $(INCDIR)/, $(NAME_H))
 
 CFLAGS= -Wall -Wextra -Werror #-fsanitize=address
-CPPFLAGS= -I ./$(INCDIR) -I ./libft/includes
-LDFLAGS = -L ./libft/ -lft -L ./minilibx-linux/ -lmlx -L -lm
+CPPFLAGS= -I ./$(INCDIR) -I ./libft/includes -I ./minilibx-linux
+LDFLAGS = -L ./libft/ -lft -L ./minilibx-linux/ -lmlx -lm -lbsd -lX11 -lXext
 
 LIBFT	= ./libft/libft.a
 MLX		= ./minilibx-linux/libmlx.a
@@ -43,6 +44,7 @@ $(NAME) : $(FILES_O) $(FILES_H) $(LIBFT) $(MLX)
 	$(CC) $(CPPFLAGS) -o $(NAME) $(FILES_O) $(LDFLAGS)
  
 $(OBJDIR)/%.o: %.c $(FILES_H) | $(OBJDIR)
+#	$(LINT) $<
 	$(CC) $(CFLAGS) $(CPPFLAGS) -c -o $@ $<
 
 $(OBJDIR):
@@ -57,9 +59,9 @@ $(MLX) :
 
 .PHONY : clean
 clean :
-	$(RM) $(FILES_O)
+	$(RM) -f $(FILES_O)
 	make -C ./libft clean
-	make -C ./minilibx clean
+	make -C ./minilibx-linux clean
 
 .PHONY : fclean
 fclean : clean
