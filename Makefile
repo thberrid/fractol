@@ -20,42 +20,40 @@ OBJDIR 	= obj
 
 NAME	= fractol
 
-DIR_O	= obj
-DIR_H	= includes
+INCDIR	= includes
 
-NAME_C	= main.c
+SRCS	= main.c
 NAME_H	= fractol.h
-NAME_O	= $(NAME_C:.s=.o)
-FILES_O	= $(addprefix $(DIR_O)/, $(NAME_O))
-FILES_H	= $(addprefix $(DIR_H)/, $(NAME_H))
+NAME_O	= $(SRCS:.c=.o)
+FILES_O	= $(addprefix $(OBJDIR)/, $(NAME_O))
+FILES_H	= $(addprefix $(INCDIR)/, $(NAME_H))
 
 CFLAGS= -Wall -Wextra -Werror #-fsanitize=address
-CPPFLAGS= -I ./$(DIR_H)
-LDFLAGS = -L ./libft/ -lft -lm
+CPPFLAGS= -I ./$(INCDIR) -I ./libft/includes
+LDFLAGS = -L ./libft/ -lft -L ./minilibx-linux/ -lmlx -L -lm
 
 LIBFT	= ./libft/libft.a
-MLX		= ./libmlx.dylib
+MLX		= ./minilibx-linux/libmlx.a
 
 LINT	= norminette
 
 all : $(NAME)
 
 $(NAME) : $(FILES_O) $(FILES_H) $(LIBFT) $(MLX)
-	$(CC) -o $(NAME) $(FILES_O) $(LDFLAGS)
+	$(CC) $(CPPFLAGS) -o $(NAME) $(FILES_O) $(LDFLAGS)
  
-$(DIR_O)/%.o: %.c $(FILES_H) | $(OBJDIR)
-	$(LINT) $<
+$(OBJDIR)/%.o: %.c $(FILES_H) | $(OBJDIR)
 	$(CC) $(CFLAGS) $(CPPFLAGS) -c -o $@ $<
 
 $(OBJDIR):
 	mkdir -p $@
 
 $(LIBFT) :
-	make -C ./libft/
+	make -C ./libft
+	make -C ./libft clean
 
 $(MLX) :
-	make -C ./minilibx/
-	cp ./minilibx/libmlx.dylib libmlx.dylib
+	make -C ./minilibx-linux
 
 .PHONY : clean
 clean :
@@ -66,7 +64,6 @@ clean :
 .PHONY : fclean
 fclean : clean
 	make -C ./libft fclean
-	make -C ./minilibx fclean
 	$(RM) $(NAME)
 
 .PHONY : re

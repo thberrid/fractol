@@ -2,3 +2,6 @@
 *.swp
 a.out
 *.o
+*.a
+fractol
+minilibx-linux/*
