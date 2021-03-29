@@ -39,7 +39,7 @@ void	draw(t_window *w)
 	i = 0;
 	while (i < 750)
 	{
-		ft_memcpy(&img.canvas[xy_to_addr(i, (750 / 2), &img)], &px, sizeof(int));
+		ft_memcpy(&img.canvas[xy_to_addr(i, i, &img)], &px, sizeof(int));
 		i += 1;
 	}
 	ft_printf("line: %d\npixel: %d\nendian: %d\n", img.line_size, img.pixel_size, img.endian);
