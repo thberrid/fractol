@@ -59,6 +59,13 @@ int 	quit(int key, t_window *w)
 	return (0);
 }
 
+int 	mouse(int button, int x, int y, t_window *w)
+{
+	(void)w;
+	ft_printf("button: %d\nx: %d\ny: %d\n", button, x, y);
+	return (0);
+}
+
 int		main(void)
 {
 	t_window    w;
@@ -68,6 +75,7 @@ int		main(void)
 	w.id = mlx_new_window(w.mlx, w.width, w.height, w.name);
 	draw(&w);
 	mlx_key_hook(w.id, &quit, &w);
+	mlx_mouse_hook(w.id, &mouse, &w);
 	mlx_loop(w.mlx);
 	return (0);
 }
