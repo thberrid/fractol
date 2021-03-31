@@ -38,6 +38,7 @@ typedef struct	s_window
 	char			name[32];
 	unsigned int	width;
 	unsigned int	height;
+	unsigned int	zoom;
 }				t_window;
 
 #endif
