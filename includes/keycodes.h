@@ -16,4 +16,7 @@
 # define K_ESC  65307
 # define K_Q    113
 
+# define SCROLL_UP		4
+# define SCROLL_DOWN	5
+
 #endif
