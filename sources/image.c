@@ -21,7 +21,7 @@ void	image_init(t_window *w, t_img *img)
 	}
 	img->id = mlx_new_image(w->mlx, w->width, w->height);
 	w->img_id = img->id;
-	img->canvas = mlx_get_data_addr(&img->id, &img->pixel_size, &img->line_size, &img->endian);
+	img->canvas = mlx_get_data_addr(img->id, &img->pixel_size, &img->line_size, &img->endian);
 }
 
 void	image_draw(t_window *w)
@@ -46,7 +46,5 @@ void	image_draw(t_window *w)
 		}
 		pixel.y += 1;
 	}
-	ft_printf("GDB %p\n", img.id);
-	ft_printf("GDB %p\n", w->id);
 	mlx_put_image_to_window(w->mlx, w->id, img.id, 0, 0);
 }
