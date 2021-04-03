@@ -53,12 +53,6 @@ enum 			e_fractalid
 	future
 };
 
-typedef struct 	s_fractal_set
-{
-	char *name;
-	int (*f)(t_pixel *);
-}				t_fractal_set;
-
 typedef struct	s_window
 {
 	void			*id;
@@ -72,7 +66,13 @@ typedef struct	s_window
 	t_pixel 		delta_zero;
 }				t_window;
 
-int				mandelbrot(t_pixel *pixel);
+typedef struct 	s_fractal_set
+{
+	char *name;
+	int (*f)(t_pixel *, t_window *);
+}				t_fractal_set;
+
+int				mandelbrot(t_pixel *pixel, t_window *w);
 
 int 		   	window_init(t_window *w, char *av1);
 void			window_move(t_window *w, t_pixel *translation);

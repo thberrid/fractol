@@ -12,9 +12,14 @@
 
 #include <fractol.h>
 
-int mandelbrot(t_pixel *pixel)
+int mandelbrot(t_pixel *pixel, t_window *w)
 {
-    if (pixel->x == pixel->y)
-        return (255 << 8);
+	t_complex	z;
+
+	pixel_to_complex(&z, pixel, w);
+	if (z.r == z.i)
+		return (255 << 8);
+	if (pixel->x == w->delta_zero.x || pixel->y == w->delta_zero.y)
+		return (255 << 16);
     return (0);
 }

@@ -21,12 +21,11 @@ int    window_init(t_window *w, char *av1)
 	ft_strcpy(w->name, W_NAME);
 	w->width = W_WIDTH;
 	w->height = W_HEIGHT;
-	w->precision = PLAN_WIDTH / W_WIDTH;
-	w->delta_zero.x = W_WIDTH / 2 * -1;
-	w->delta_zero.y = W_HEIGHT / 2 * -1;
+	w->precision = (float)PLAN_WIDTH / W_WIDTH;
+	w->delta_zero.x = W_WIDTH / 2;
+	w->delta_zero.y = W_HEIGHT / 2;
     return (0);
 }
-
 
 void	window_move(t_window *w, t_pixel *translation)
 {

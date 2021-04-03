@@ -39,7 +39,7 @@ void	image_draw(t_window *w)
 		pixel.x = 0;
 		while (pixel.x < W_WIDTH)
 		{
-			color = fractal_set[w->fractal_setid].f(&pixel);
+			color = fractal_set[w->fractal_setid].f(&pixel, w);
 			if (color)
 				ft_memcpy(&img.canvas[pixel_to_addr(&pixel, &img)], &color, sizeof(int));
 			pixel.x += 1;

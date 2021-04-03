@@ -21,6 +21,7 @@
 # define K_RIGHT    65363
 # define K_BOTTOM   65364
 
+# define CLICK_LEFT		1
 # define SCROLL_UP		4
 # define SCROLL_DOWN	5
 

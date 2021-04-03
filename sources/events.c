@@ -11,15 +11,19 @@
 /* ************************************************************************** */
 
 #include <fractol.h>
+#include <stdio.h>
 
 t_pixel *delta_from_key(t_pixel *translation, int key)
 {
 	t_pixel direction;
 
+	ft_bzero(translation, sizeof(t_pixel));
 	direction.x = key == K_LEFT ? 1 : -1;
 	direction.y = key == K_TOP ? 1 : -1;
-	translation->x = W_WIDTH / 15 * direction.x;
-	translation->y = W_HEIGHT / 15 * direction.y;
+	if (key == K_LEFT ||  key == K_RIGHT)
+		translation->x = W_WIDTH / 15 * direction.x;
+	if (key == K_TOP ||  key == K_BOTTOM)
+		translation->y = W_HEIGHT / 15 * direction.y;
 	return (translation);
 }	
 
@@ -34,13 +38,17 @@ int 	mouse(int button, int x, int y, t_window *w)
 {
 	t_pixel		mouse;
 	t_pixel		translation;
+	t_complex	z;
 
+	mouse.x = x;
+	mouse.y = y;
+	pixel_to_complex(&z, &mouse, w);
+	if (button == CLICK_LEFT)
+		printf("x: %d y: %d\nr: %f\ni: %f\n", x, y, z.r, z.i);
 	if (button == SCROLL_UP || button == SCROLL_DOWN)
 	{
-		mouse.x = x;
-		mouse.y = y;
 		delta_from_mouse(&translation, &mouse, button);
-		window_move(w, &translation);
+//		window_move(w, &translation);
 		window_zoom(w, button);
 		image_draw(w);
 	}

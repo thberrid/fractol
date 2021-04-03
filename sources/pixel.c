@@ -14,8 +14,8 @@
 
 t_complex	*pixel_to_complex(t_complex *z, t_pixel *px, t_window *w)
 {
-	z->r  = px->x + w->delta_zero.x * w->precision;
-	z->i  = px->y + w->delta_zero.y * w->precision;
+	z->r = (px->x - w->delta_zero.x) * w->precision;
+	z->i = (px->y - w->delta_zero.y) * w->precision * -1;
 	return (z);
 }
 
