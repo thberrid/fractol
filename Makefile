@@ -22,7 +22,14 @@ NAME	= fractol
 
 INCDIR	= includes
 
-SRCS	= main.c
+SRCS	= main.c \
+			events.c \
+			fractal_sets.c \
+			image.c \
+			mandelbrot.c \
+			pixel.c \
+			usage.c \
+			window.c
 NAME_H	= fractol.h \
 			keycodes.h
 NAME_O	= $(SRCS:.c=.o)

@@ -17,9 +17,23 @@
 # include <libft.h>
 # include <mlx.h>
 
-# define W_WIDTH	750
-# define W_HEIGHT	750
-# define W_NAME		"fractol"
+# define W_WIDTH		750
+# define W_HEIGHT		750
+# define PLAN_WIDTH		4
+# define PLAN_HEIGHT	4
+# define W_NAME			"fractol"
+
+typedef struct s_complex
+{
+	float r;
+	float i;
+}				t_complex;
+
+typedef struct s_pixel
+{
+	int 	x;
+	int 	y;
+}				t_pixel;
 
 typedef struct	s_img
 {
@@ -30,15 +44,50 @@ typedef struct	s_img
 	int		endian;
 }				t_img;
 
+# define FRACTAL_SETS_LEN	1
+
+enum 			e_fractalid
+{
+	mandelb,
+	julia,
+	future
+};
+
+typedef struct 	s_fractal_set
+{
+	char *name;
+	int (*f)(t_pixel *);
+}				t_fractal_set;
+
 typedef struct	s_window
 {
 	void			*id;
 	void			*mlx;
-	void			*img;
 	char			name[32];
+	void			*img_id;
+	enum e_fractalid 	fractal_setid;
 	unsigned int	width;
 	unsigned int	height;
-	unsigned int	zoom;
+	float			precision;
+	t_pixel 		delta_zero;
 }				t_window;
+
+int				mandelbrot(t_pixel *pixel);
+
+int 		   	window_init(t_window *w, char *av1);
+void			window_move(t_window *w, t_pixel *translation);
+void			window_zoom(t_window *w, int key);
+t_complex		*pixel_to_complex(t_complex *z, t_pixel *px, t_window *w);
+int 			pixel_to_addr(t_pixel *pixel, t_img *imgdata);
+
+void			image_draw(t_window *w);
+
+int 			mouse(int button, int x, int y, t_window *w);
+int 			keyboard(int key, t_window *w);
+
+int 			get_fractal_id(char *name);
+t_fractal_set 	*get_available_sets(void);
+
+void 			print_usage(void);
 
 #endif
