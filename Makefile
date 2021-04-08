@@ -22,15 +22,15 @@ NAME	= fractol
 
 INCDIR	= includes
 
-SRCS	= main.c \
-			events.c \
-			fractal_sets.c \
-			image.c \
-			mandelbrot.c \
-			pixel.c \
-			usage.c \
+SRCS	= main.c 			\
+			complex_plane.c \
+			events.c 		\
+			fractal_sets.c 	\
+			image.c 		\
+			mandelbrot.c 	\
+			usage.c 		\
 			window.c
-NAME_H	= fractol.h \
+NAME_H	= fractol.h 		\
 			keycodes.h
 NAME_O	= $(SRCS:.c=.o)
 FILES_O	= $(addprefix $(OBJDIR)/, $(NAME_O))

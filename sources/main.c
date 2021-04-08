@@ -21,11 +21,10 @@ int		main(int ac, char **av)
 	else
 	{	
 		w.mlx = mlx_init();
-		w.id = mlx_new_window(w.mlx, w.width, w.height, w.name);
+		w.id = mlx_new_window(w.mlx, VIEWPORT_LENGTH, VIEWPORT_LENGTH, w.name);
 		image_draw(&w);
-		ft_printf("drawned !\n");
-		mlx_key_hook(w.id, &keyboard, &w);
-		mlx_mouse_hook(w.id, &mouse, &w);
+		mlx_key_hook(w.id, w.fractal_set->kboard, &w);
+		mlx_mouse_hook(w.id, w.fractal_set->mouse, &w);
 		mlx_loop(w.mlx);
 	}
 	return (0);

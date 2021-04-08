@@ -16,12 +16,13 @@
 # include <keycodes.h>
 # include <libft.h>
 # include <mlx.h>
+# include <stdio.h>
 
-# define W_WIDTH		750
-# define W_HEIGHT		750
-# define PLAN_WIDTH		5
-# define PLAN_HEIGHT	5
-# define W_NAME			"fractol"
+# define VIEWPORT_LENGTH		750
+# define COMPLEXE_PLAN_LENGTH	5.0
+# define W_NAME					"fractol"
+
+# define FRACTAL_SETS_LEN		1
 
 typedef struct s_complex
 {
@@ -35,60 +36,55 @@ typedef struct s_pixel
 	int 	y;
 }				t_pixel;
 
-typedef struct	s_img
+typedef struct	s_mlx_img
 {
 	void	*id;
 	char	*canvas;
 	int		line_size;
 	int		pixel_size;
 	int		endian;
-}				t_img;
+}				t_mlx_img;
 
-# define FRACTAL_SETS_LEN	1
-
-enum 			e_fractalid
+typedef struct	s_complex_plane
 {
-	mandelb,
-	julia,
-	future
-};
+	t_complex	minimum;
+	long double	precision;
+	long double	length;
+}				t_complex_plane;
 
 typedef struct	s_window
 {
 	void			*id;
 	void			*mlx;
 	char			name[32];
-	void			*img_id;
-	enum e_fractalid 	fractal_setid;
-	int				zoom;
-	unsigned int	width;
-	unsigned int	height;
-	long double			precision;
-	int				iterations;
-	t_pixel 		delta_zero;
+	void			*mlx_img_id;
+	struct s_fractal_set	*fractal_set;
+	t_complex_plane	complex_plane;
 }				t_window;
 
 typedef struct 	s_fractal_set
 {
 	char *name;
-	int (*f)(t_pixel *, t_window *);
+	int (*draw)(t_complex *, t_window *);
+	int (*mouse)(int, int, int, t_window *);
+	int (*kboard)(int, t_window *);
 }				t_fractal_set;
 
-int				mandelbrot(t_pixel *pixel, t_window *w);
+int				mandelbrot(t_complex *pixel, t_window *w);
+int 			mandelmouse(int button, int x, int y, t_window *w);
+int 			mandelkboard(int key, t_window *w);
 
 int 		   	window_init(t_window *w, char *av1);
-void			window_reset(t_window *w);
-void			window_move(t_window *w, t_pixel *translation);
-void			window_zoom(t_window *w, int key);
-t_complex		*pixel_to_complex(t_complex *z, t_pixel *px, t_window *w);
-int 			pixel_to_addr(t_pixel *pixel, t_img *imgdata);
+
+void			complex_plane_reset(t_window *w);
+void			complex_plane_move(t_window *w, t_pixel *translation);
+void			complex_plane_zoom(t_window *w, int key);
+
+int 			pixel_to_addr(t_pixel *pixel, t_mlx_img *imgdata);
 
 void			image_draw(t_window *w);
 
-int 			mouse(int button, int x, int y, t_window *w);
-int 			keyboard(int key, t_window *w);
-
-int 			get_fractal_id(char *name);
+t_fractal_set	*get_fractal_set(char *name);
 t_fractal_set 	*get_available_sets(void);
 
 void 			print_usage(void);
