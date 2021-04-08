@@ -13,8 +13,9 @@
 #ifndef KEYCODES_H
 # define KEYCODES_H
 
-# define K_ESC  65307
-# define K_Q    113
+# define K_ESC  	65307
+# define K_Q    	113
+# define K_SPACE	32
 
 # define K_LEFT     65361
 # define K_TOP      65362
@@ -22,7 +23,7 @@
 # define K_BOTTOM   65364
 
 # define CLICK_LEFT		1
-# define SCROLL_UP		4
-# define SCROLL_DOWN	5
+# define ZOOM_IN		4
+# define ZOOM_OUT		5
 
 #endif

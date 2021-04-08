@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include <fractol.h>
+#include <stdio.h>
 
 void	image_init(t_window *w, t_img *img)
 {
@@ -24,16 +25,36 @@ void	image_init(t_window *w, t_img *img)
 	img->canvas = mlx_get_data_addr(img->id, &img->pixel_size, &img->line_size, &img->endian);
 }
 
+void	bg_paint(t_img *img)
+{
+	t_pixel	pixel;
+	int color;
+
+	color = 16777215;
+	pixel.y = 0;
+	while (pixel.y < W_HEIGHT)
+	{
+		pixel.x = 0;
+		while (pixel.x < W_WIDTH)
+		{
+			ft_memcpy(&img->canvas[pixel_to_addr(&pixel, img)], &color, sizeof(int));
+			pixel.x += 1;
+		}
+		pixel.y += 1;
+	}
+}
+
 void	image_draw(t_window *w)
 {
 	t_img	img;
 	t_pixel	pixel;
 	t_fractal_set *fractal_set;
-	int color;
+	unsigned int color;
 
     fractal_set = get_available_sets();
 	image_init(w, &img);
 	pixel.y = 0;
+	bg_paint(&img);
 	while (pixel.y < W_HEIGHT)
 	{
 		pixel.x = 0;
@@ -41,7 +62,10 @@ void	image_draw(t_window *w)
 		{
 			color = fractal_set[w->fractal_setid].f(&pixel, w);
 			if (color)
+			{
+			//	color = mlx_get_color_value(w->mlx, color);
 				ft_memcpy(&img.canvas[pixel_to_addr(&pixel, &img)], &color, sizeof(int));
+			}
 			pixel.x += 1;
 		}
 		pixel.y += 1;

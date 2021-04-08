@@ -19,14 +19,14 @@
 
 # define W_WIDTH		750
 # define W_HEIGHT		750
-# define PLAN_WIDTH		4
-# define PLAN_HEIGHT	4
+# define PLAN_WIDTH		5
+# define PLAN_HEIGHT	5
 # define W_NAME			"fractol"
 
 typedef struct s_complex
 {
-	float r;
-	float i;
+	long double r;
+	long double i;
 }				t_complex;
 
 typedef struct s_pixel
@@ -60,9 +60,11 @@ typedef struct	s_window
 	char			name[32];
 	void			*img_id;
 	enum e_fractalid 	fractal_setid;
+	int				zoom;
 	unsigned int	width;
 	unsigned int	height;
-	float			precision;
+	long double			precision;
+	int				iterations;
 	t_pixel 		delta_zero;
 }				t_window;
 
@@ -75,6 +77,7 @@ typedef struct 	s_fractal_set
 int				mandelbrot(t_pixel *pixel, t_window *w);
 
 int 		   	window_init(t_window *w, char *av1);
+void			window_reset(t_window *w);
 void			window_move(t_window *w, t_pixel *translation);
 void			window_zoom(t_window *w, int key);
 t_complex		*pixel_to_complex(t_complex *z, t_pixel *px, t_window *w);

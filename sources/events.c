@@ -27,10 +27,19 @@ t_pixel *delta_from_key(t_pixel *translation, int key)
 	return (translation);
 }	
 
-t_pixel	*delta_from_mouse(t_pixel *translation, t_pixel *mouse, int button)
+t_pixel	*delta_from_mouse(t_pixel *translation, t_pixel *mouse, t_window *w, int button)
 {
-	if (button)
-		translation->x += mouse->x;
+
+	if (button == ZOOM_OUT)
+	{
+		translation->x = 0;
+		translation->y = 0;
+	}
+	else
+	{
+		translation->x = w->delta_zero.x - mouse->x;
+		translation->y = w->delta_zero.y - mouse->y;
+	}
 	return (translation);
 }
 
@@ -43,12 +52,12 @@ int 	mouse(int button, int x, int y, t_window *w)
 	mouse.x = x;
 	mouse.y = y;
 	pixel_to_complex(&z, &mouse, w);
-	if (button == CLICK_LEFT)
-		printf("x: %d y: %d\nr: %f\ni: %f\n", x, y, z.r, z.i);
-	if (button == SCROLL_UP || button == SCROLL_DOWN)
+//	if (button == CLICK_LEFT)
+//		printf("x: %d y: %d\nr: %f\ni: %f\n", x, y, z.r, z.i);
+	if (button == ZOOM_IN || button == ZOOM_OUT)
 	{
-		delta_from_mouse(&translation, &mouse, button);
-//		window_move(w, &translation);
+		delta_from_mouse(&translation, &mouse, w, button);
+		window_move(w, &translation);
 		window_zoom(w, button);
 		image_draw(w);
 	}
@@ -59,13 +68,18 @@ int 	keyboard(int key, t_window *w)
 {
 	t_pixel translation;
 
-	if (key == K_ESC || key == K_Q)
+	if (key == K_SPACE)
+	{
+		window_reset(w);
+		image_draw(w);
+	}
+	else if (key == K_ESC || key == K_Q)
 	{
 		mlx_destroy_image(w->mlx, w->img_id);
 		mlx_destroy_window(w->mlx, w->id);
 		exit(0);
 	}
-	if (key >= K_LEFT && key <= K_BOTTOM)
+	else if (key >= K_LEFT && key <= K_BOTTOM)
 	{
 		delta_from_key(&translation, key);
 		window_move(w, &translation);
