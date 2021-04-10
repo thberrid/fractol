@@ -28,6 +28,7 @@ SRCS	= main.c 			\
 			fractal_sets.c 	\
 			image.c 		\
 			mandelbrot.c 	\
+			thread.c		\
 			usage.c 		\
 			window.c
 NAME_H	= fractol.h 		\
@@ -48,7 +49,7 @@ LINT	= norminette
 all : $(NAME)
 
 $(NAME) : $(FILES_O) $(FILES_H) $(LIBFT) $(MLX)
-	$(CC) $(CPPFLAGS) -o $(NAME) $(FILES_O) $(LDFLAGS)
+	$(CC) $(CPPFLAGS) -pthread -o $(NAME) $(FILES_O) $(LDFLAGS)
  
 $(OBJDIR)/%.o: %.c $(FILES_H) | $(OBJDIR)
 #	$(LINT) $<

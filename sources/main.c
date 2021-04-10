@@ -22,7 +22,8 @@ int		main(int ac, char **av)
 	{	
 		w.mlx = mlx_init();
 		w.id = mlx_new_window(w.mlx, VIEWPORT_LENGTH, VIEWPORT_LENGTH, w.name);
-		image_draw(&w);
+		image_init(&w);
+		thread_draw(&w);
 		mlx_key_hook(w.id, w.fractal_set->kboard, &w);
 		mlx_mouse_hook(w.id, w.fractal_set->mouse, &w);
 		mlx_loop(w.mlx);

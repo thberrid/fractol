@@ -17,12 +17,17 @@
 # include <libft.h>
 # include <mlx.h>
 # include <stdio.h>
+# include <pthread.h>
 
-# define VIEWPORT_LENGTH		750
 # define COMPLEXE_PLAN_LENGTH	5.0
 # define W_NAME					"fractol"
 
 # define FRACTAL_SETS_LEN		1
+
+# define THREAD_MAX				4
+# define VIEWPORT_LENGTH		750
+# define VIEWPORT_DIVISION		2
+# define VIEWPORT_LENGTH_THREAD	VIEWPORT_LENGTH / VIEWPORT_DIVISION
 
 typedef struct s_complex
 {
@@ -48,18 +53,28 @@ typedef struct	s_mlx_img
 typedef struct	s_complex_plane
 {
 	t_complex	minimum;
-	long double	precision;
-	long double	length;
+	double		precision;
+	double		length;
 }				t_complex_plane;
+
+typedef struct	s_thread_data
+{
+	pthread_t		id;
+	t_complex		minimum;
+	t_pixel			pixel;
+	struct s_window	*w;
+}				t_thread_data;
 
 typedef struct	s_window
 {
-	void			*id;
-	void			*mlx;
-	char			name[32];
-	void			*mlx_img_id;
+	void					*id;
+	void					*mlx;
+	t_mlx_img				img;
+	char					name[32];
+	int						zoom;
+	t_complex_plane			complex_plane;
+	t_thread_data			threads[THREAD_MAX];
 	struct s_fractal_set	*fractal_set;
-	t_complex_plane	complex_plane;
 }				t_window;
 
 typedef struct 	s_fractal_set
@@ -75,6 +90,7 @@ int 			mandelmouse(int button, int x, int y, t_window *w);
 int 			mandelkboard(int key, t_window *w);
 
 int 		   	window_init(t_window *w, char *av1);
+void			image_init(t_window *w);
 
 void			complex_plane_reset(t_window *w);
 void			complex_plane_move(t_window *w, t_pixel *translation);
@@ -82,7 +98,9 @@ void			complex_plane_zoom(t_window *w, int key);
 
 int 			pixel_to_addr(t_pixel *pixel, t_mlx_img *imgdata);
 
-void			image_draw(t_window *w);
+void			thread_set(t_window *w);
+int				thread_draw(t_window *w);
+void	*routine(void *data);
 
 t_fractal_set	*get_fractal_set(char *name);
 t_fractal_set 	*get_available_sets(void);

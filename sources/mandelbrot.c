@@ -17,24 +17,31 @@ int mandelbrot(t_complex *c, t_window *w)
 	int			iterations;
 	int			index;
 	t_complex	z;
-	long double	z_r2;
-	long double	z_i2;
+	t_complex	z_sqr;
 	(void)w;
 
 	ft_bzero(&z, sizeof(t_complex));
+	ft_bzero(&z_sqr, sizeof(t_complex));
 	index = 0;
-	iterations = 255;
-	z_r2 = 0;
-	z_i2 = 0;
+	iterations = 50 + w->zoom * 3;
 	while (index < iterations)
 	{
 		z.i = 2 * z.r * z.i + c->i;
-		z.r = z_r2 - z_i2 + c->r;
-		z_r2 = z.r * z.r;
-		z_i2 = z.i * z.i;
-		if (z_r2 + z_i2 > 4)
+		z.r = z_sqr.r - z_sqr.i + c->r;
+		z_sqr.r = z.r * z.r;
+		z_sqr.i = z.i * z.i;
+		if (z_sqr.r + z_sqr.i > 4)
 			break ;
 		index += 1;
 	}
-	return (index << 16);
+	/*
+	red = (iteration * 16) % 256
+green = (iteration * 8) % 256
+blue = (iteration * 4) % 256
+	*/
+	if (index == iterations)
+		return (0);
+	return (((index * 16 ) % 256 << 16) + ((index * 8 ) % 256 << 8) + ((index * 4 ) % 256));
+//	int index1 = index - 255  ?
+//	return (index1 << 16 + index2 << 8);
 }
