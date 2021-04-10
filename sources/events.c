@@ -46,9 +46,9 @@ int 	mandelmouse(int button, int x, int y, t_window *w)
 	mouse.y = y;
 	if (button != ZOOM_IN && button != ZOOM_OUT)
 		return (0);
-	if ((w->zoom == 0 && button == ZOOM_OUT) || (w->zoom == 52 && button == ZOOM_IN))
+	if ((w->zoom == 0 && button == ZOOM_OUT) || (w->zoom == 50 && button == ZOOM_IN))
 	{
-		printf("no more zoom\n");
+		printf("no more zoom (zoom level = %d)\n", w->zoom);
 		return (0);
 	}
 	w->zoom += button == ZOOM_IN ? 1 : -1;

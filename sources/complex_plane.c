@@ -14,6 +14,7 @@
 
 void	complex_plane_reset(t_window *w)
 {
+	w->zoom = 0;
 	w->complex_plane.length = COMPLEXE_PLAN_LENGTH;
 	w->complex_plane.precision = w->complex_plane.length / VIEWPORT_LENGTH;
 	w->complex_plane.minimum.r = COMPLEXE_PLAN_LENGTH / 2.0 * -1;

@@ -32,8 +32,8 @@ void		thread_set(t_window *w)
 			this->w = w;
 			this->pixel.x = VIEWPORT_LENGTH_THREAD * (division_x % VIEWPORT_DIVISION);
 			this->pixel.y = VIEWPORT_LENGTH_THREAD * (division_y % VIEWPORT_DIVISION);
-			this->minimum.r = complex_plane->minimum.r + (complex_plane->length / VIEWPORT_DIVISION * (division_x % VIEWPORT_DIVISION));
-			this->minimum.i = complex_plane->minimum.i - (complex_plane->length / VIEWPORT_DIVISION * (division_y % VIEWPORT_DIVISION));
+			this->minimum.r = complex_plane->minimum.r + (this->pixel.x * w->complex_plane.precision);
+			this->minimum.i = complex_plane->minimum.i - (this->pixel.y * w->complex_plane.precision);
 			division_x += 1;
 			index += 1;
 		}
@@ -57,7 +57,7 @@ int		thread_draw(t_window *w)
 		pthread_join(w->threads[index].id, NULL);
 		index += 1;
 	}
-	mlx_clear_window(w->mlx, w->id);
+//	mlx_clear_window(w->mlx, w->id);
 	mlx_put_image_to_window(w->mlx, w->id, w->img.id, 0, 0);
 	return (0);
 }

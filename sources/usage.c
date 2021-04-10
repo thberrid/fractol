@@ -25,5 +25,5 @@ void print_usage(void)
         ft_printf("\t- %s\n", available_sets[index].name);
         index += 1;
     }
-    ft_putendl("");
+    ft_printf("\nQ or ESC to quit\nMouse scroll to zoom\nSPACE to reset the viewport\nArrow to move the viewport\n\n");
 }
