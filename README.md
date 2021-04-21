@@ -2,9 +2,14 @@
 
 ***interesting things***
 Mandelbrot
+
 https://www.youtube.com/watch?v=7MotVcGvFMg
+
+
 Julia set
+
 https://www.youtube.com/watch?v=dctJ7ISkU-4
+
 
 ***mlx notes***
 Color goes 4 bytes as follow :
