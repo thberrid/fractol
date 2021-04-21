@@ -1,13 +1,12 @@
 # fractol
 
 ***interesting things***
-Mandelbrot
 
+Mandelbrot :
 https://www.youtube.com/watch?v=7MotVcGvFMg
 
 
-Julia set
-
+Julia set :
 https://www.youtube.com/watch?v=dctJ7ISkU-4
 
 
