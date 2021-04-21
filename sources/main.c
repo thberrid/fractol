@@ -14,19 +14,20 @@
 
 int		main(int ac, char **av)
 {
-	t_window    w;
+	t_window	w;
 
 	if (ac != 2 || window_init(&w, av[1]))
-		print_usage();
-	else
-	{	
-		w.mlx = mlx_init();
-		w.id = mlx_new_window(w.mlx, VIEWPORT_LENGTH, VIEWPORT_LENGTH, w.name);
-		image_init(&w);
-		thread_draw(&w);
-		mlx_key_hook(w.id, w.fractal_set->kboard, &w);
-		mlx_mouse_hook(w.id, w.fractal_set->mouse, &w);
-		mlx_loop(w.mlx);
-	}
+		return (print_usage());
+	w.mlx = mlx_init();
+	if (!w.mlx || !(w.id = mlx_new_window(w.mlx, VP_LENGTH, VP_LENGTH, w.name))
+		|| image_init(&w))
+		return (print_init_error());
+	if (thread_draw(&w))
+		return (print_thread_error());
+	mlx_key_hook(w.id, w.fractal_set->kboard, &w);
+	mlx_mouse_hook(w.id, w.fractal_set->mouse, &w);
+	if (w.fractal_set->hover)
+		mlx_hook(w.id, 6, 1L << 6, w.fractal_set->hover, &w);
+	mlx_loop(w.mlx);
 	return (0);
 }

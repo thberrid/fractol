@@ -16,7 +16,7 @@ void	complex_plane_reset(t_window *w)
 {
 	w->zoom = 0;
 	w->complex_plane.length = COMPLEXE_PLAN_LENGTH;
-	w->complex_plane.precision = w->complex_plane.length / VIEWPORT_LENGTH;
+	w->complex_plane.precision = w->complex_plane.length / VP_LENGTH;
 	w->complex_plane.minimum.r = COMPLEXE_PLAN_LENGTH / 2.0 * -1;
 	w->complex_plane.minimum.i = COMPLEXE_PLAN_LENGTH / 2.0;
 }
@@ -36,8 +36,10 @@ void	complex_plane_zoom(t_window *w, int key)
 	factor = key == ZOOM_IN ? 1.0 / 2 : 2;
 	direction = key == ZOOM_IN ? 1 : -1;
 	w->complex_plane.length *= factor;
-	w->complex_plane.precision = w->complex_plane.length / VIEWPORT_LENGTH;
-	n_len = key == ZOOM_IN ? w->complex_plane.length : w->complex_plane.length / 2;
+	w->complex_plane.precision = w->complex_plane.length / VP_LENGTH;
+	n_len = w->complex_plane.length / 2;
+	if (key == ZOOM_IN)
+		n_len = w->complex_plane.length;
 	w->complex_plane.minimum.r += (n_len / 2) * direction;
 	w->complex_plane.minimum.i -= (n_len / 2) * direction;
 }

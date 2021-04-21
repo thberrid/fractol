@@ -14,17 +14,15 @@
 
 t_complex	*pixel_to_complex(t_complex *dst, t_pixel *src, t_window *w)
 {
-
 	ft_bzero(dst, sizeof(t_complex));
-
 	dst->r = src->x * w->complex_plane.precision;
 	dst->i = src->y * w->complex_plane.precision * -1;
-	dst->r += w->complex_plane.minimum.r; 
-	dst->i += w->complex_plane.minimum.i; 
+	dst->r += w->complex_plane.minimum.r;
+	dst->i += w->complex_plane.minimum.i;
 	return (dst);
 }
 
-int 	pixel_to_addr(t_pixel *pixel, t_mlx_img *imgdata)
+int			pixel_to_addr(t_pixel *pixel, t_mlx_img *imgdata)
 {
 	int	addr;
 

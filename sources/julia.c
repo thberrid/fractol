@@ -12,7 +12,7 @@
 
 #include <fractol.h>
 
-int	julia_mouse(int x, int y, t_window *w)
+int		julia_mouse(int x, int y, t_window *w)
 {
 	t_pixel		pixel;
 
@@ -22,11 +22,12 @@ int	julia_mouse(int x, int y, t_window *w)
 	pixel.x = x;
 	pixel.y = y;
 	pixel_to_complex(&w->mouse_over, &pixel, w);
-	thread_draw(w);
+	if (thread_draw(w))
+		force_quit(w);
 	return (0);
 }
 
-int julia(t_complex *zsrc, t_window *w)
+int		julia(t_complex *zsrc, t_window *w)
 {
 	int			iterations;
 	int			index;
@@ -48,5 +49,5 @@ int julia(t_complex *zsrc, t_window *w)
 	}
 	if (index == iterations)
 		return (0);
-	return (((index * 16 ) % 256 << 16) + ((index * 8 ) % 256 << 8) + ((index * 4 ) % 256));
+	return (int_to_color(index));
 }

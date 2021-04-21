@@ -24,12 +24,16 @@ INCDIR	= includes
 
 SRCS	= main.c 			\
 			complex_plane.c \
-			events.c 		\
+			color.c 		\
+			events_generic.c\
 			fractal_sets.c 	\
-			image.c 		\
+			julia.c			\
 			mandelbrot.c 	\
+			pixel.c			\
+			print.c 		\
+			quit.c			\
 			thread.c		\
-			usage.c 		\
+			ship.c			\
 			window.c
 NAME_H	= fractol.h 		\
 			keycodes.h
@@ -37,7 +41,7 @@ NAME_O	= $(SRCS:.c=.o)
 FILES_O	= $(addprefix $(OBJDIR)/, $(NAME_O))
 FILES_H	= $(addprefix $(INCDIR)/, $(NAME_H))
 
-CFLAGS= -Wall -Wextra -Werror -g3 #-fsanitize=address
+CFLAGS= -Wall -Wextra -Werror #-g3 -fsanitize=address
 CPPFLAGS= -I ./$(INCDIR) -I ./libft/includes -I ./minilibx-linux
 LDFLAGS = -L ./libft/ -lft -L ./minilibx-linux/ -lmlx -lm -lbsd -lX11 -lXext
 
